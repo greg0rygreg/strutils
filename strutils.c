@@ -1,3 +1,6 @@
+// TODO fix this dumb stupid thing where valgrind says:
+// 37 bytes definitely lost in 2 blocks
+
 #include "strutils.h"
 #include <stddef.h>
 #include <stdlib.h>
@@ -45,6 +48,7 @@ str strreverse(str s) {
   return tmp;
 }
 
+// God help me
 str strjoin(str* sa, size_t sal, char d) {
   size_t toalloc = 0;
   for (size_t i = 0; i < sal; i++)
@@ -69,7 +73,7 @@ str strtitlecase(str s) {
   if (!temp) return NULL;
   if (temp[0] >= 0x61 && temp[0] <= 0x7a)
     temp[0] -= 0x20;
-  for (size_t i = 1; i < strlen(temp); i++) {
+  for (size_t i = 1; temp[i]; i++) {
     if (temp[i] >= 0x61 && temp[i] <= 0x7a) {
       if (temp[i - 1] == ' ' || temp[i - 1] == '-' || temp[i - 1] == '/' || temp[i - 1] == '\\' || temp[i - 1] == '\n')
         temp[i] -= 0x20;
@@ -81,7 +85,7 @@ str strtitlecase(str s) {
 str struppercase(str s) {
   str temp = strdup(s);
   if (!temp) return NULL;
-  for (size_t i = 0; i < strlen(temp); i++) {
+  for (size_t i = 0; temp[i]; i++) {
     if (temp[i] >= 0x61 && temp[i] <= 0x7a)
       temp[i] -= 0x20;
   }
@@ -91,7 +95,7 @@ str struppercase(str s) {
 str strlowercase(str s) {
   str temp = strdup(s);
   if (!temp) return NULL;
-  for (size_t i = 0; i < strlen(temp); i++) {
+  for (size_t i = 0; temp[i]; i++) {
     if (temp[i] >= 0x41 && temp[i] <= 0x5a)
       temp[i] += 0x20;
   }
@@ -101,7 +105,7 @@ str strlowercase(str s) {
 str strreversecase(str s) {
   str temp = malloc(strlen(s) + 1);
   if (!temp) return NULL;
-  for (size_t i = 0; i < strlen(s); i++) {
+  for (size_t i = 0; s[i]; i++) {
     if (s[i] >= 0x41 && s[i] <= 0x5a)
       temp[i] = s[i] + 0x20;
     else if (s[i] >= 0x61 && s[i] <= 0x7a)
@@ -122,7 +126,7 @@ void dptrfree(void** dp, size_t ln) {
 
 str strreplace(str s, char c, char r, str* rs) {
   str t = strdup(s);
-  for (size_t i = 0; i < strlen(t); i++) {
+  for (size_t i = 0; t[i]; i++) {
     if (t[i] == c) {
       t[i] = r;
     }
@@ -135,9 +139,30 @@ str strreplace(str s, char c, char r, str* rs) {
 }
 
 int strhas(str s, char c) {
-  for (size_t i = 0; i < strlen(s); i++) {
+  for (size_t i = 0; s[i]; i++) {
     if (s[i] == c)
       return 1;
   }
   return 0;
+}
+
+size_t strcount(str s, char c) {
+  size_t cc = 0; // char count
+  size_t n; // current char
+  for (n = 0; s[n]; n++)
+    if (s[n] == c) cc++;
+  return cc;
+}
+
+str strrem(str s, char c) {
+  size_t cc = strcount(s, c);
+  if (cc == 0) return s;
+  size_t cc2 = strlen(s) - cc;
+  ++cc2; // increment by 1 to give it space for a null term
+  str t = malloc(cc2);
+  size_t n, n2;
+  for (n = n2 = 0; s[n]; n++)
+    if (s[n] != c) t[n2++] = s[n]; // n2 moves only when it does't find c, n moves every iteration
+  t[cc2] = 0;
+  return t;
 }

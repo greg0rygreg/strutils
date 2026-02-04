@@ -66,8 +66,8 @@ str strreversecase(str s);
 // `str s`: string
 // `char c`: character to be replaced
 // `char r`: character to replace `c`
-// `str rs`: return string (pass `NULL`)
-// to use `return`
+// `str rs`: return string (pass `NULL`
+// to use `return`)
 str strreplace(str s, char c, char r, str* rs);
 
 // find `c` in `s`
@@ -75,6 +75,20 @@ str strreplace(str s, char c, char r, str* rs);
 // `str s`: string
 // `char c`: character to find
 int strhas(str s, char c);
+
+// count every instance of
+// `c` in `s`
+//
+// `str s`: string
+// `char c`: character to count
+unsigned long strcount(str s, char c);
+
+// remove every instance of
+// `c` from `s`
+//
+// `str s`: string
+// `char c`: character to remove
+str strrem(str s, char c);
 
 #ifdef __cplusplus
 }

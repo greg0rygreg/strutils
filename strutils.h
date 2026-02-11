@@ -66,9 +66,7 @@ str strreversecase(str s);
 // `str s`: string
 // `char c`: character to be replaced
 // `char r`: character to replace `c`
-// `str rs`: return string (pass `NULL`
-// to use `return`)
-str strreplace(str s, char c, char r, str* rs);
+str strreplace(str s, char c, char r);
 
 // find `c` in `s`
 //

@@ -1,4 +1,6 @@
 # strutils
 string utilities for C that i made for personal use and for other people
 
-read `strutils.h` to see all available functions
+## TODO
+- [X] fix this dumb stupid thing where valgrind says: `37 bytes definitely lost in 2 blocks`
+- [ ] make line 75 (now 82) of [`strutils.c`](strutils.c) optimized

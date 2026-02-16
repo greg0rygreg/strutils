@@ -30,7 +30,7 @@ int main() {
   // but that would end the string early
   // 2/11/26 now you have strrem(str s, char c)
   str testHUHd2 = strreplace(testHUHd, '?', '.');
-  str testCR = "hello, so, like, this sentence, is FILLED, to the brim, with commas";
+  str testCR = "hello, so, like, this sentence, is FILLED, to, like, um, the brim, with commas";
   size_t testC = strcount(testCR, ',');
   str testR = strrem(testCR, ',');
 

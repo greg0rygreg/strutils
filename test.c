@@ -20,7 +20,7 @@ int main() {
   str testUCS = "i'm screaming at the very top of my lungs!!!!! can you hear me????";
   str testRCS = "I'M SCREAMING AT THE TOP OF MY VERY LUNGS!!!!! can you hear me????";
   str testJS[] = {"i'm", "going", "insane"};
-  str testJdS = strjoin(testJS, 3, ' ');
+  str testJdS = strjoin(testJS, 3, "-a ", 1);
   str testTCdS = strtitlecase(testTCS);
   str testUCdS = struppercase(testUCS);
   str testLCdS = strlowercase(testUCdS);

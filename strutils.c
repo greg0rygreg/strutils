@@ -37,7 +37,7 @@ str* strsplit(str s, char d, size_t* lr) {
 
 str strreverse(str s) {
   size_t l = strlen(s);
-  str tmp = malloc(l);
+  str tmp = malloc(l+1);
   if (!tmp) return NULL;
   for (int i = l - 1; i >= 0; i--) {
     tmp[l - (i + 1)] = s[i];
@@ -47,25 +47,29 @@ str strreverse(str s) {
 }
 
 // God help me
-str strjoin(str* sa, size_t sal, char d) {
+str strjoin(str* sa, size_t sal, str d, int il) {
   if (!sa || sal < 1) return NULL;
-  size_t n = 0;
+  size_t n = 0,
+         dl = strlen(d),
+         dlt = dl - il? 0:1;
   for (size_t i = 0; i < sal; i++)
     n += strlen(sa[i]);
-  n += sal;
+  n += sal * dlt + 1;
   str ret = malloc(n);
   if (!ret) return NULL;
   //ret[0] = 0;
   for (size_t i = 0; i < sal; i++) {
     if (i != 0)
-      snprintf(ret + strlen(ret), strlen(sa[i])+2, "%c%s", d, sa[i]);
+      snprintf(ret + strlen(ret), strlen(sa[i])+1+dl, "%s%s", d, sa[i]);
     else
-      snprintf(ret + strlen(ret), strlen(sa[i])+2, "%s", sa[i]);
+      snprintf(ret + strlen(ret), strlen(sa[i])+1, "%s", sa[i]);
   }
+  if (il)
+    snprintf(ret + strlen(ret), dl, "%s", d);
   return ret;
 }
 
-int strhas(str s, char c) {
+int strhas(str s, char c) { // for strs: strstr() from string.h
   for (size_t i = 0; s[i]; i++)
     if (s[i] == c) return 1;
   return 0;
@@ -78,7 +82,6 @@ str strtitlecase(str s) {
     temp[0] -= 0x20;
   for (size_t i = 1; temp[i]; i++) {
     if (temp[i] >= 0x61 && temp[i] <= 0x7a) {
-      //if (temp[i - 1] == ' ' || temp[i - 1] == '-' || temp[i - 1] == '/' || temp[i - 1] == '\\' || temp[i - 1] == '\n')
       if (strhas(" -/\\\n", temp[i-1]))
         temp[i] -= 0x20;
     }
@@ -127,8 +130,7 @@ void dptrfree(void** dp, size_t ln) {
   free(dp);
 }
 
-// 2/11/26 FIXED A 37 BYTE BIG MEMORY LEAK:
-// All heap blocks were freed -- no leaks are possible
+// 3/12/26 not sure how to turn the chars into strings
 str strreplace(str s, char c, char r) {
   str t = strdup(s);
   for (size_t i = 0; t[i]; i++) {
@@ -137,14 +139,16 @@ str strreplace(str s, char c, char r) {
   return t;
 }
 
+// 3/13/26 same here
 size_t strcount(str s, char c) {
   size_t cc = 0; // char count
-  size_t n; // current char
-  for (n = 0; s[n]; n++)
+  size_t n = 0; // current char
+  for (;s[n]; n++)
     if (s[n] == c) cc++;
   return cc;
 }
 
+// 3/13/26 and here
 str strrem(str s, char c) {
   size_t cc = strcount(s, c);
   if (cc == 0) return s;

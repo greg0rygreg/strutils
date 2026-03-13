@@ -36,7 +36,7 @@ void dptrfree(void** dp, unsigned long ln);
 // `size_t sal`: string array length
 //
 // `char d`: delimiter
-str strjoin(str* sa, unsigned long sal, char d);
+str strjoin(str* sa, unsigned long sal, str d, int il);
 
 // title-case a string
 //

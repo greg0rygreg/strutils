@@ -161,3 +161,13 @@ str strrem(str s, char c) {
   t[cc2] = 0;
   return t;
 }
+
+str strsub(str s, size_t ii, size_t cc) {
+  if (ii > strlen(s)) return NULL;
+  cc = cc > strlen(s) - ii || cc <= 0? strlen(s) - ii:cc;
+  str t = malloc(cc+1);
+  for (int i = 0; i < cc; i++)
+    t[i] = s[ii+i];
+  t[cc] = 0;
+  return t;
+}

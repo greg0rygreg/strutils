@@ -64,13 +64,16 @@ str strreversecase(str s);
 // with `c`
 //
 // `str s`: string
+//
 // `char c`: character to be replaced
+//
 // `char r`: character to replace `c`
 str strreplace(str s, char c, char r);
 
 // find `c` in `s`
 //
 // `str s`: string
+//
 // `char c`: character to find
 int strhas(str s, char c);
 
@@ -78,6 +81,7 @@ int strhas(str s, char c);
 // `c` in `s`
 //
 // `str s`: string
+//
 // `char c`: character to count
 unsigned long strcount(str s, char c);
 
@@ -85,8 +89,19 @@ unsigned long strcount(str s, char c);
 // `c` from `s`
 //
 // `str s`: string
+//
 // `char c`: character to remove
 str strrem(str s, char c);
+
+// Lua's string.sub() function
+//
+// `str s`: string
+//
+// `size_t ii`: initial index
+//
+// `size_t cc`: counted chars (pass 0 or less to
+// count until the end of the string)
+str strsub(str s, unsigned long ii, unsigned long cc);
 
 #ifdef __cplusplus
 }

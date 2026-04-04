@@ -33,6 +33,10 @@ int main() {
   str testCR = "hello, so, like, this sentence, is FILLED, to, like, um, the brim, with commas";
   size_t testC = strcount(testCR, ',');
   str testR = strrem(testCR, ',');
+  str testSS = "substring!!!";
+  str testSSd = strsub(testSS, 3, 7);
+  str testSSd2 = strsub(testSS, 9, 3);
+  str testSSd3 = strsub(testSS, 5, 0);
 
   // printing part
   printf("%s:\n%s %s %s %s under %s %s %s\n\n", testS, testS_split[0], testS_split[2], testS_split[l-1], testS_split[4], testS_split[6], testS_split[l-2], testS_split[3]);
@@ -45,7 +49,8 @@ int main() {
   printf("%s:\n%s\n\n", testRCS, testRCdS);
   printf("%s:\n%s / %s\n\n", testHUH, testHUHd, testHUHd2);
   printf("%s:\n%lu commas counted\n\n", testCR, testC);
-  printf("%s:\n%s\n", testCR, testR);
+  printf("%s:\n%s\n\n", testCR, testR);
+  printf("%s:\n%s (start at index 3, count 7 chars);\n%s (start at index 9, count 3 chars);\n%s (start at index 5, count until the end)\n", testSS, testSSd, testSSd2, testSSd3);
 
   // MMM hell
   dptrfree((void**)testS_split, l);
@@ -59,6 +64,9 @@ int main() {
   free(testLCdS);
   free(testRCdS);
   free(testR);
+  free(testSSd);
+  free(testSSd2);
+  free(testSSd3);
 
   // freedom.
   return 0;
